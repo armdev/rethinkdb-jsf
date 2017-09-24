@@ -15,19 +15,24 @@
     </properties>
     
     <dependencies>
-        
+        <dependency>
+            <groupId>org.fluttercode.datafactory</groupId>
+            <artifactId>datafactory</artifactId>
+            <version>0.8</version>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>com.rethinkdb</groupId>
             <artifactId>rethinkdb-driver</artifactId>
             <version>2.3.3</version>
         </dependency>
-<!--
+        <!--
         <dependency>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <version>1.2.1</version>
         </dependency>
-     	-->
+        -->
         <dependency> 
             <groupId>org.apache.httpcomponents</groupId>  
             <artifactId>httpclient</artifactId>  

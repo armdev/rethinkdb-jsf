@@ -1,4 +1,4 @@
-package com.project.dao;
+package com.project.frontbeans;
 
 import com.rethinkdb.RethinkDB;
 import com.rethinkdb.net.Connection;
