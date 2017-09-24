@@ -32,22 +32,26 @@ public class PersonBean implements Serializable {
 
     public List<Person> getPersonList() {
         List<Person> personList = new ArrayList<>();
-        Person person = new Person();
-        Cursor cursor = dbConnection.getPersonTable().run(dbConnection.getConnection());
-       // Cursor cursor = dbConnection.getPersonTable().changes().run(dbConnection.getConnection());
-        for (Object doc : cursor) {
-            Map docMap = (Map) doc;
-            person = new Person();
-            person.setId((String) docMap.get("id"));
-            person.setAddress((String) docMap.get("address"));
-            person.setBusinessName((String) docMap.get("businessName"));
-            person.setCity((String) docMap.get("city"));
-            person.setFirstName((String) docMap.get("firstname"));
-            person.setLastName((String) docMap.get("lastname"));
-            person.setBirthDate((String) docMap.get("birthDate"));
-            personList.add(0, person);
+        try {
+            Person person = new Person();
+            Cursor cursor = dbConnection.getCursor();
+            // Cursor cursor = dbConnection.getPersonTable().changes().run(dbConnection.getConnection());
+            for (Object doc : cursor) {
+                Map docMap = (Map) doc;
+                person = new Person();
+                person.setId((String) docMap.get("id"));
+                person.setAddress((String) docMap.get("address"));
+                person.setBusinessName((String) docMap.get("businessName"));
+                person.setCity((String) docMap.get("city"));
+                person.setFirstName((String) docMap.get("firstname"));
+                person.setLastName((String) docMap.get("lastname"));
+                person.setBirthDate((String) docMap.get("birthDate"));
+                personList.add(0, person);
+            }
+        } catch (Exception e) {
+
         }
-     
+
         return personList;
     }
 
