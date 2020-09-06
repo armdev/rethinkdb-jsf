@@ -19,7 +19,7 @@ import javax.inject.Named;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.fluttercode.datafactory.impl.DataFactory;
+
 
 @Named(value = "databaseConnection")
 @ApplicationScoped
@@ -31,16 +31,18 @@ public class DBConnection implements Serializable {
 
     @Getter
     private final RethinkDB databaseAccess = RethinkDB.r;
+    
     @Getter
     private Connection connection;
 
-    private final String databaseUrl = "localhost";
+    private final String databaseUrl = "127.0.0.1";
     private final Integer databasePort = 28015;
     private ScheduledExecutorService scheduler;
 
     @PostConstruct
     public void init() {
         try {
+            System.out.println("RUNNNN");
 
             connection = databaseAccess.connection().hostname(databaseUrl).port(databasePort).connect();
 
@@ -67,9 +69,13 @@ public class DBConnection implements Serializable {
             scheduler = Executors.newSingleThreadScheduledExecutor();
             scheduler.scheduleAtFixedRate(new GenerateData(), 0, 15, TimeUnit.SECONDS);
         } catch (Exception e) {
+            e.printStackTrace();
 
         }
+       
 
+        //generateDataAndSaveToDatabase();
+       // generateDataAndSaveToDatabase1() ;
     }
 
     @PreDestroy
@@ -78,16 +84,16 @@ public class DBConnection implements Serializable {
     }
 
     public boolean generateDataAndSaveToDatabase() {
-        DataFactory df = new DataFactory();
+       Faker faker = new Faker();
         Person person = new Person();
         for (int i = 0; i < 10; i++) {
             person = new Person();
-            person.setAddress(df.getAddress());
-            person.setBusinessName(df.getBusinessName());
-            person.setCity(df.getCity());
-            person.setFirstName(df.getFirstName());
-            person.setLastName(df.getLastName());
-            person.setBirthDate(df.getBirthDate().toString());
+            person.setAddress(faker.address().streetAddress());
+            person.setBusinessName(faker.business().creditCardNumber());
+            person.setCity(faker.address().cityName());
+            person.setFirstName(faker.name().firstName());
+            person.setLastName(faker.name().lastName());
+            person.setBirthDate(faker.date().toString());
 
             getPersonTable().insert(databaseAccess.array(
                     databaseAccess.hashMap("firstname", person.getFirstName())
@@ -113,8 +119,8 @@ public class DBConnection implements Serializable {
             person.setCity(faker.address().cityName());
             person.setFirstName(faker.name().firstName());
             person.setLastName(faker.name().lastName());
-            DataFactory df = new DataFactory();
-            person.setBirthDate(df.getBirthDate().toString());
+           
+            person.setBirthDate(faker.date().toString());
             getPersonTable().insert(databaseAccess.array(
                     databaseAccess.hashMap("firstname", person.getFirstName())
                             .with("lastname", person.getLastName())
@@ -133,6 +139,7 @@ public class DBConnection implements Serializable {
 
         @Override
         public void run() {
+            System.out.println("RUNNNN RUN");
             generateDataAndSaveToDatabase1();
             generateDataAndSaveToDatabase();
         }

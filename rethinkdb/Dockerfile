@@ -1,0 +1,4 @@
+FROM rethinkdb
+
+#COPY ./data.json /usr/data.json
+#RUN rethinkdb import -f /usr/data.json --table data.table --format json  && rm /usr/data.json

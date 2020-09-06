@@ -1,10 +1,10 @@
 package com.project.model;
 
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -14,10 +14,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Setter
-@Getter
+
 @NoArgsConstructor
-public class Person {
+@Data
+public class Person implements Serializable{
 
     private String id;
     private String firstName;

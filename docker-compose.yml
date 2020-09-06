@@ -1,0 +1,9 @@
+version: '2'
+services:
+  rethinkdb:
+    build: ./rethinkdb
+    ports:
+     - "28015"
+    volumes:
+     - ./data:/data
+    command: rethinkdb --bind all

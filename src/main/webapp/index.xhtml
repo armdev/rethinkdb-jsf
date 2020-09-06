@@ -23,6 +23,7 @@
                             <p:tabView>
                                 <p:tab title="Our new Users">
                                     <h:form prependId="false">
+                                        <h:commandButton value="GET" action="#{databaseConnection.init()}"/>
                                         <p:poll interval="2" update="usertable" async="true"/>
                                         <p:dataTable var="list" id="usertable" value="#{personBean.personList}" rendered="#{not empty personBean.personList}"
                                                      rows="20"
